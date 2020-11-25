@@ -9,6 +9,8 @@ import 'package:alice/core/alice_http_extensions.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:overlay_support/overlay_support.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -18,11 +20,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Alice _alice;
-  Dio _dio;
-  HttpClient _httpClient;
-  ChopperClient _chopper;
-  PostsService _postsService;
+  late Alice _alice;
+  late Dio _dio;
+  late HttpClient _httpClient;
+  ChopperClient? _chopper;
+  late PostsService _postsService;
 
   @override
   void initState() {
@@ -41,47 +43,49 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          primaryColor: Color(0xffff5e57), accentColor: Color(0xffff3f34)),
-      navigatorKey: _alice.getNavigatorKey(),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Alice HTTP Inspector - Example'),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(16),
-          child: ListView(
-            children: [
-              const SizedBox(height: 8),
-              _getTextWidget(
-                  "Welcome to example of Alice Http Inspector. Click buttons below to generate sample data."),
-              RaisedButton(
-                child: Text("Run Dio HTTP Requests"),
-                onPressed: _runDioRequests,
-              ),
-              RaisedButton(
-                child: Text("Run http/http HTTP Requests"),
-                onPressed: _runHttpHttpRequests,
-              ),
-              RaisedButton(
-                child: Text("Run HttpClient Requests"),
-                onPressed: _runHttpHttpClientRequests,
-              ),
-              RaisedButton(
-                child: Text("Run Chopper HTTP Requests"),
-                onPressed: _runChopperHttpRequests,
-              ),
-              const SizedBox(height: 24),
-              _getTextWidget(
-                  "After clicking on buttons above, you should receive notification."
-                  " Click on it to show inspector. You can also shake your device or click button below."),
-              RaisedButton(
-                child: Text("Run HTTP Insepctor"),
-                onPressed: _runHttpInspector,
-              )
-            ],
+    return OverlaySupport(
+      child: MaterialApp(
+        theme: ThemeData(
+            primaryColor: Color(0xffff5e57), accentColor: Color(0xffff3f34)),
+        navigatorKey: _alice.getNavigatorKey(),
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Alice HTTP Inspector - Example'),
+          ),
+          body: Container(
+            padding: EdgeInsets.all(16),
+            child: ListView(
+              children: [
+                const SizedBox(height: 8),
+                _getTextWidget(
+                    "Welcome to example of Alice Http Inspector. Click buttons below to generate sample data."),
+                RaisedButton(
+                  child: Text("Run Dio HTTP Requests"),
+                  onPressed: _runDioRequests,
+                ),
+                RaisedButton(
+                  child: Text("Run http/http HTTP Requests"),
+                  onPressed: _runHttpHttpRequests,
+                ),
+                RaisedButton(
+                  child: Text("Run HttpClient Requests"),
+                  onPressed: _runHttpHttpClientRequests,
+                ),
+                RaisedButton(
+                  child: Text("Run Chopper HTTP Requests"),
+                  onPressed: _runChopperHttpRequests,
+                ),
+                const SizedBox(height: 24),
+                _getTextWidget(
+                    "After clicking on buttons above, you should receive notification."
+                    " Click on it to show inspector. You can also shake your device or click button below."),
+                RaisedButton(
+                  child: Text("Run HTTP Insepctor"),
+                  onPressed: _runHttpInspector,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -153,58 +157,58 @@ class _MyAppState extends State<MyApp> {
   void _runHttpHttpRequests() async {
     Map<String, dynamic> body = {"title": "foo", "body": "bar", "userId": "1"};
     http
-        .post('https://jsonplaceholder.typicode.com/posts', body: body)
+        .post(Uri.parse('https://jsonplaceholder.typicode.com/posts'), body: body)
         .interceptWithAlice(_alice, body: body);
 
     http
-        .get('https://jsonplaceholder.typicode.com/posts')
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/posts'))
         .interceptWithAlice(_alice);
 
     http
-        .put('https://jsonplaceholder.typicode.com/posts/1', body: body)
+        .put(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'), body: body)
         .interceptWithAlice(_alice, body: body);
 
     http
-        .patch('https://jsonplaceholder.typicode.com/posts/1', body: body)
+        .patch(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'), body: body)
         .interceptWithAlice(_alice, body: body);
 
     http
-        .delete('https://jsonplaceholder.typicode.com/posts/1')
+        .delete(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'))
         .interceptWithAlice(_alice, body: body);
 
     http
-        .get('https://jsonplaceholder.typicode.com/test/test')
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/test/test'))
         .interceptWithAlice(_alice);
 
     http
-        .post('https://jsonplaceholder.typicode.com/posts', body: body)
+        .post(Uri.parse('https://jsonplaceholder.typicode.com/posts'), body: body)
         .then((response) {
       _alice.onHttpResponse(response, body: body);
     });
 
-    http.get('https://jsonplaceholder.typicode.com/posts').then((response) {
+    http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts')).then((response) {
       _alice.onHttpResponse(response);
     });
 
     http
-        .put('https://jsonplaceholder.typicode.com/posts/1', body: body)
+        .put(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'), body: body)
         .then((response) {
       _alice.onHttpResponse(response, body: body);
     });
 
     http
-        .patch('https://jsonplaceholder.typicode.com/posts/1', body: body)
+        .patch(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'), body: body)
         .then((response) {
       _alice.onHttpResponse(response, body: body);
     });
 
     http
-        .delete('https://jsonplaceholder.typicode.com/posts/1')
+        .delete(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'))
         .then((response) {
       _alice.onHttpResponse(response);
     });
 
-    http.get('https://jsonplaceholder.typicode.com/test/test').then((response) {
+    http.get(Uri.parse('https://jsonplaceholder.typicode.com/test/test')).then((response) {
       _alice.onHttpResponse(response);
     });
   }
