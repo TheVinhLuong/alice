@@ -87,9 +87,10 @@ class _DebugPopUpState extends State<DebugPopUp> {
         mini: true,
       ),
     );
-    return Draggable<int>(
+    return Draggable<MPosition>(
       child: widget,
       feedback: widget,
+      data: MPosition.bottomLeft,
       onDragCompleted: () => _hideHintBox(),
       onDragEnd: (d) => _hideHintBox(),
       onDragStarted: () => _showHintBox(),
@@ -119,9 +120,9 @@ class _DebugPopUpState extends State<DebugPopUp> {
     return Positioned(
       child: Center(
         child: _buildTartGetBox(
-          child: DragTarget<int>(
+          child: DragTarget<MPosition>(
             onWillAccept: (_) => handleOnWillAccept(MPosition.middleLeft),
-            builder: (context, List<int?> candidateData, rejectedData) {
+            builder: (context, List<MPosition?> candidateData, rejectedData) {
               if (currentPosition == MPosition.middleLeft) {
                 return widget;
               }
@@ -140,10 +141,10 @@ class _DebugPopUpState extends State<DebugPopUp> {
     return Positioned(
       child: Center(
         child: _buildTartGetBox(
-          child: DragTarget<int>(
+          child: DragTarget<MPosition>(
             onWillAccept: (_) => handleOnWillAccept(MPosition.middleRight),
             onAccept: (_) => handleOnAccept(MPosition.middleRight),
-            builder: (context, List<int?> candidateData, rejectedData) {
+            builder: (context, List<MPosition?> candidateData, rejectedData) {
               if (currentPosition == MPosition.middleRight) {
                 return widget;
               }
@@ -161,10 +162,10 @@ class _DebugPopUpState extends State<DebugPopUp> {
   Positioned _targetBottomRight(Widget widget) {
     return Positioned(
       child: _buildTartGetBox(
-        child: DragTarget<int>(
+        child: DragTarget<MPosition>(
           onWillAccept: (_) => handleOnWillAccept(MPosition.bottomRight),
           onAccept: (_) => handleOnAccept(MPosition.bottomRight),
-          builder: (context, List<int?> candidateData, rejectedData) {
+          builder: (context, List<MPosition?> candidateData, rejectedData) {
             if (currentPosition == MPosition.bottomRight) {
               return widget;
             }
@@ -180,10 +181,10 @@ class _DebugPopUpState extends State<DebugPopUp> {
   Positioned _targetBottomLeft(Widget widget) {
     return Positioned(
       child: _buildTartGetBox(
-        child: DragTarget<int>(
+        child: DragTarget<MPosition>(
           onWillAccept: (_) => handleOnWillAccept(MPosition.bottomLeft),
           onAccept: (_) => handleOnAccept(MPosition.bottomLeft),
-          builder: (context, List<int?> candidateData, rejectedData) {
+          builder: (context, List<MPosition?> candidateData, rejectedData) {
             if (currentPosition == MPosition.bottomLeft) {
               return widget;
             }
@@ -199,10 +200,10 @@ class _DebugPopUpState extends State<DebugPopUp> {
   Positioned _targetTopRight(Widget widget) {
     return Positioned(
       child: _buildTartGetBox(
-        child: DragTarget<int>(
+        child: DragTarget<MPosition>(
           onWillAccept: (_) => handleOnWillAccept(MPosition.topRight),
           onAccept: (_) => handleOnAccept(MPosition.topRight),
-          builder: (context, List<int?> candidateData, rejectedData) {
+          builder: (context, List<MPosition?> candidateData, rejectedData) {
             if (currentPosition == MPosition.topRight) {
               return widget;
             }
@@ -218,10 +219,10 @@ class _DebugPopUpState extends State<DebugPopUp> {
   Positioned _targetTopLeft(Widget widget) {
     return Positioned(
       child: _buildTartGetBox(
-        child: DragTarget<int>(
+        child: DragTarget<MPosition>(
           onWillAccept: (_) => handleOnWillAccept(MPosition.topLeft),
           onAccept: (_) => handleOnAccept(MPosition.topLeft),
-          builder: (context, List<int?> candidateData, rejectedData) {
+          builder: (context, List<MPosition?> candidateData, rejectedData) {
             if (currentPosition == MPosition.topLeft) {
               return widget;
             }
