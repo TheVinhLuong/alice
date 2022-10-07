@@ -15,7 +15,7 @@ class AliceAlertHelper {
     List<Widget> actions = [];
     if (firstButtonTitle != null) {
       actions.add(
-        FlatButton(
+        ElevatedButton(
           child: Text(firstButtonTitle),
           onPressed: () {
             if (firstButtonAction != null) {
@@ -28,7 +28,7 @@ class AliceAlertHelper {
     }
     if (secondButtonTitle != null) {
       actions.add(
-        FlatButton(
+        ElevatedButton(
           child: Text(secondButtonTitle),
           onPressed: () {
             if (secondButtonAction != null) {

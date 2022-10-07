@@ -60,19 +60,19 @@ class _MyAppState extends State<MyApp> {
                 const SizedBox(height: 8),
                 _getTextWidget(
                     "Welcome to example of Alice Http Inspector. Click buttons below to generate sample data."),
-                RaisedButton(
+                ElevatedButton(
                   child: Text("Run Dio HTTP Requests"),
                   onPressed: _runDioRequests,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text("Run http/http HTTP Requests"),
                   onPressed: _runHttpHttpRequests,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text("Run HttpClient Requests"),
                   onPressed: _runHttpHttpClientRequests,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text("Run Chopper HTTP Requests"),
                   onPressed: _runChopperHttpRequests,
                 ),
@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
                 _getTextWidget(
                     "After clicking on buttons above, you should receive notification."
                     " Click on it to show inspector. You can also shake your device or click button below."),
-                RaisedButton(
+                ElevatedButton(
                   child: Text("Run HTTP Insepctor"),
                   onPressed: _runHttpInspector,
                 )
